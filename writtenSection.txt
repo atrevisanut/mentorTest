@@ -1,28 +1,84 @@
 Answer each question in a written format
 
 1. What does semantic HTML mean?
+Semantic html is about the meaning of html rather than just the presentation. Tags that only define how text should look, are not semantic (<i>,<b>, etc). Semantic tags give additional information beyond how the text should look on a website. For example, text that's enclosed in <code> tags will be immediately recognized by the browser as some type of coding language.
 
 2. What is the box model?
+The box model is the padding, border and margin that surrounds every html element (which is the content). The box model in order is the content, padding, border and margin. Padding is transparent, and clears an area around the content. The border goes around the padding and content, and the margin will clear area outside the border and is transparent as well.
+
 
 3. What is the difference between IDs and Classes?
+ID's are css styles applied to one specific element, ID's are unique, each element can only have one ID. Classes are the style we want every element that has that class to apply to, they are not unique, and can be applied on multiple elements, elements can also have multiple classes on the same element. For example, if you want 5 elements to be styled the same, they will all have the same class. However, if of those 5 elements you want one to just be a different color, you would give it an ID that changed the color to differentiate it from the other elements.
 
 4. What does the z-index do?
+specifies the stack order of the element it's targeting. Example: if you have two elements overlapping, the z-index will allow you to send your chosen element to the front or the back depending on how it's styled. 0 is the default level it has on the page, negatives push it back depending on how many layers back you want to send it, positive numbers pull it forward however many layers you want to pull it up.
 
 5. Summarize what the keyword 'this' is used for?
+Summary: ‘This’ is used for referencing the current object whose method or function is being called.
+
+Going deeper: 'this' is used in JavaScript similarly for the reason we use pronouns in sentences. Pronouns are things like ‘he’, ‘she’ or ‘it’, they refer to the main subject of the sentence. For example, ‘Jack likes apples, he thinks apples are good’, he refers to Jack, because it would be annoying to have to say Jack every time we were talking about him. An example of how ‘this’ is used:
+--
+var things = {     //here’s the object, or ‘main subject’
+ thingOne: 'Purple',    // object attribute
+ thingTwo: 'Blue',       // object attribute
+ thingCaller: function(){  //object attribute which is a function
+   console.log(this.thingOne + " " + this.thingTwo)
+   //above, 'this' refers to the object ‘things’, effectively a shorter way of saying things.thingOne and things.thingTwo
+ }
+}
+things.thingCaller() //will console out Purple and Blue
+--
+'this' evaluates to the value of the object it's bound to in the current context that it's being executed in. It's used as a reference to the current object whose method or function is being called. You can call on any attribute within the current object by using the keyword 'this'.
+
 
 6. What is a callback?
+A callback function is a function passed to another function via parameter. The callback function is called within the function it was passed to. Ex:
+
+var functionMain = function(func){
+  func; //the callback
+}
+var func = function(){
+  console.log("Hey the callback works");
+}
+functionMain(func()) //passes the func function to functionMain as a param
 
 7. What is a closure?
+When a function is finished running, all of it's local variables are wiped. However, using closures, we can allow that data to persist. A closure can hold onto a local variable even after the code has been executed, it makes the local variable  you want it to hold onto persistent. This is done by returning a function stored in a variable from within a function. Example:
+
+var outerFunc = function(){
+ var number = 3;
+ var innerFunc = function(){
+ console.log(number);
+ }
+return innerFunc;
+}
+
+var persisting = outerFunc();
+persisting(); //will return the value of number from within outerFunc
+
 
 8. How does prototype work?
+ Hmm.. let me try to explain what I understand of how prototype works. Every JS function has a prototype property, you implement prototype when you want to implement inheritance. For example: using a constructor function to set up an object:
+
+ function originalObj () {
+ ​this.cat = 'calico';
+ }
+
+
+ ​var newObj = new originalObj; //the prototype of newObj is originalObj
+
 
 9. What is MVC?
+MVC is the model view controller, this separates your web application into three main components, the model, view and controller. It's a structure that's used to organize the front end of an application. The model is where information is stored, the view is the DOM where that information is rendered, and the controller is where input can be taken from the user and then communicate with data from the backend to update it and update the view to reflect the updated information.
 
 10. What is the component lifecycle?
+The component lifecycle can vary among different frameworks, so I'll talk about it in terms of Angular 1. Directives and components have a lifecycle as Angular creates, updates and destroys them. You can look at the lifecycle of a directive or component by using hook interfaces from Angular's library. The component lifecycle is the stages of a component as Angular creates, updates and destroys them and it defines the instances when these hooks took place.
 
 11. What is REST?
+REST stands for representational state transfer and is a set of rules defined by the programming community to establish the correct way for communicating with APIs via http methods such as post, put, get, delete and patch.
 
 12. Name three ways of getting data from the URL using express
+    You can get data from a URL by using req.param, or query them by using req.query. A third way is by possibly getting information from the body of the url, post params can be grabbed by using req.body (after all of these use a . afterwards and specify which property you're looking for in the object)
 
 create table users (
 id serial,
@@ -31,11 +87,18 @@ email varchar(255)
 )
 
 12. Given the Schema above, write the following four basic CRUD db queries using postgres syntax
-
 -Get all users:
+SELECT * FROM users
 
 -Create a new user with the name of 'your name' and an email of 'fake@fake.com':
+INSERT INTO users (name, email)
+VALUES(Alex, alex@gmail.com)
 
 -Update the newly created user's name to 'Bobby Boy':
+UPDATE users
+SET name = 'Bobby Boy'
+WHERE name = 'Alex'
 
 -Delete the newly updated user:
+DELETE FROM users
+WHERE name = 'Bobby Boy'
